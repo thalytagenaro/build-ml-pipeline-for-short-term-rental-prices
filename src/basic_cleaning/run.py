@@ -31,6 +31,10 @@ def go(args):
     logger.info("Converting date column 'last_review' type")
     df['last_review'] = pd.to_datetime(df['last_review'])
 
+    logger.info("Setting longitude and latitude between defined boundaries")
+    idx = df['longitude'].between(-74.25, -73.50) & df['latitude'].between(40.5, 41.2)
+    df = df[idx].copy()
+
     logger.info("Saving results")
     df.to_csv(args.output_artifact, index=False)
 
